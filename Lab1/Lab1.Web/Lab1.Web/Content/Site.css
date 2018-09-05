@@ -121,3 +121,7 @@
 .row {
     padding-bottom: 15px;
 }
+
+.display-hide {
+    display: none;
+}

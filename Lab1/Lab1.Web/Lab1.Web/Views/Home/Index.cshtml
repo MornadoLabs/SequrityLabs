@@ -9,75 +9,84 @@
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-6">
-
-                <div class="row">
-                    <div class="col-md-12">
-                        @Html.Label("Input type: ")
-                        <div class="radio">
-                            <label>
-                                @Html.RadioButtonFor(m => m.InputType, true)
-                                Variants
-                            </label>
+                <form id="inputForm">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @Html.Label("Input type: ")
+                            <div class="radio">
+                                <label>
+                                    @Html.RadioButtonFor(m => m.InputType, true)
+                                    Variants
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    @Html.RadioButtonFor(m => m.InputType, false)
+                                    Manual input
+                                </label>
+                            </div>
                         </div>
-                        <div class="radio">
-                            <label>
-                                @Html.RadioButtonFor(m => m.InputType, false)
-                                Manual input
-                            </label>
+                    </div>
+
+                    <div class="row @(Model.InputType ? "" : "display-hide")" id="variantInputRow">
+                        <div class="col-md-4">
+                            @Html.LabelFor(m => m.Variant)
+                        </div>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(m => m.Variant, variants)
                         </div>
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-4">
-                        @Html.LabelFor(m => m.Variant)
+                    <div id="manualInputRow" class="@(!Model.InputType ? "" : "display-hide")">
+                        <div class="row">
+                            <div class="col-md-1">
+                                @Html.LabelFor(m => m.ManualInput.A)
+                            </div>
+                            <div class="col-md-5">
+                                @Html.TextBoxFor(m => m.ManualInput.A)
+                                @Html.ValidationMessageFor(m => m.ManualInput.A)
+                            </div>
+                            <div class="col-md-1">
+                                @Html.LabelFor(m => m.ManualInput.C)
+                            </div>
+                            <div class="col-md-5">
+                                @Html.TextBoxFor(m => m.ManualInput.C)
+                                @Html.ValidationMessageFor(m => m.ManualInput.C)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-1">
+                                @Html.LabelFor(m => m.ManualInput.M)
+                            </div>
+                            <div class="col-md-5">
+                                @Html.TextBoxFor(m => m.ManualInput.M)
+                                @Html.ValidationMessageFor(m => m.ManualInput.M)
+                            </div>
+                            <div class="col-md-1">
+                                @Html.LabelFor(m => m.ManualInput.X0)
+                            </div>
+                            <div class="col-md-5">
+                                @Html.TextBoxFor(m => m.ManualInput.X0)
+                                @Html.ValidationMessageFor(m => m.ManualInput.X0)
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-8">
-                        @Html.DropDownListFor(m => m.Variant, variants)
+                    <div class="row">
+                        <div class="col-md-4">
+                            @Html.LabelFor(m => m.OutputSize)
+                        </div>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(m => m.OutputSize)                            
+                        </div>
                     </div>
-                </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center">@Html.ValidationMessageFor(m => m.OutputSize)</div>
+                    </div>
 
-                <div class="row">
-                    <div class="col-md-1">
-                        @Html.LabelFor(m => m.ManualInput.A)
+                    <div class="row">
+                        <button class="col-md-offset-4 col-md-4" type="submit">OK</button>
                     </div>
-                    <div class="col-md-5">
-                        @Html.TextBoxFor(m => m.ManualInput.A)
-                    </div>
-                    <div class="col-md-1">
-                        @Html.LabelFor(m => m.ManualInput.C)
-                    </div>
-                    <div class="col-md-5">
-                        @Html.TextBoxFor(m => m.ManualInput.C)
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-1">
-                        @Html.LabelFor(m => m.ManualInput.M)
-                    </div>
-                    <div class="col-md-5">
-                        @Html.TextBoxFor(m => m.ManualInput.M)
-                    </div>
-                    <div class="col-md-1">
-                        @Html.LabelFor(m => m.ManualInput.X0)
-                    </div>
-                    <div class="col-md-5">
-                        @Html.TextBoxFor(m => m.ManualInput.X0)
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        @Html.LabelFor(m => m.OutputSize)
-                    </div>
-                    <div class="col-md-8">
-                        @Html.TextBoxFor(m => m.OutputSize)
-                    </div>
-                </div>
-
-                <div class="row">
-                    <button class="col-md-offset-4 col-md-4">OK</button>
-                </div>
-
+                </form>
             </div>
 
             <div class="col-md-6">
@@ -86,3 +95,5 @@
         </div>
     </div>
 </div>
+
+<div data-source-url="@(Html.Action("InputData", "Home"))" id="InputDataUrl" />
