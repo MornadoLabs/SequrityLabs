@@ -14,6 +14,6 @@ namespace Lab1.Web.Models
         public InputModel ManualInput { get; set; }
 
         [Display(Name="Output Size")]
-        public long OutputSize { get; set; }
+        public int OutputSize { get; set; }
     }
 }

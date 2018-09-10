@@ -1,3 +1,5 @@
+//import swal from 'sweetalert2'
+//import 'sweetalert2/src/sweetalert2.scss'
 var Lab1;
 (function (Lab1) {
     var Main = (function () {
@@ -10,12 +12,16 @@ var Lab1;
                 MTextBoxId: "ManualInput_M",
                 X0TextBoxId: "ManualInput_X0",
                 OutputSizeTextBoxId: "OutputSize",
+                PageNumberLabelId: "pageNumber",
+                PeriodLabelId: "period",
                 VariantsRowId: "variantInputRow",
                 ManualRowId: "manualInputRow",
-                InputFormId: "inputForm"
-            };
-            this.URLs = {
-                InputDataUrl: "InputDataUrl"
+                InputFormId: "inputForm",
+                PrevPageButtonId: "prevPage",
+                NextPageButtonId: "nextPage",
+                FirstPageButtonId: "firstPage",
+                LastPageButtonId: "lastPage",
+                OutputScreenId: "outputScreen",
             };
             this.dataSourceAttr = "data-source-url";
             this.initialize();
@@ -33,6 +39,18 @@ var Lab1;
                     variantRow.addClass("display-hide");
                     manualRow.removeClass("display-hide");
                 }
+            });
+            $('#' + self.ElementIDs.FirstPageButtonId).click(function () {
+                self.loadPage(0);
+            });
+            $('#' + self.ElementIDs.PrevPageButtonId).click(function () {
+                self.loadPage(Number($('#' + self.ElementIDs.PageNumberLabelId).text()) - 2);
+            });
+            $('#' + self.ElementIDs.NextPageButtonId).click(function () {
+                self.loadPage(Number($('#' + self.ElementIDs.PageNumberLabelId).text()));
+            });
+            $('#' + self.ElementIDs.LastPageButtonId).click(function () {
+                self.loadPage(self.pagesCount - 1);
             });
             self.initFormValidation();
         };
@@ -124,13 +142,17 @@ var Lab1;
                             OutputSize: $('#' + self.ElementIDs.OutputSizeTextBoxId).val(),
                         };
                     }
+                    self.waitingdialog = new Lab1.waitingdialog();
+                    self.waitingdialog.show("Loading...");
                     $.ajax({
-                        url: $('#' + self.URLs.InputDataUrl).attr(self.dataSourceAttr),
+                        url: "/Home/InputData",
                         method: "post",
                         data: data,
-                        async: true,
                         success: function (response) {
                             if (response.Success) {
+                                self.waitingdialog.hide();
+                                self.pagesCount = response.PagesCount;
+                                $('#' + self.ElementIDs.PeriodLabelId).text(response.Period);
                                 self.loadPage(0);
                             }
                         }
@@ -142,6 +164,37 @@ var Lab1;
             });
         };
         Main.prototype.loadPage = function (number) {
+            var self = this;
+            $.ajax({
+                url: "/Home/LoadPage",
+                method: "post",
+                data: { number: number },
+                success: function (response) {
+                    $('#' + self.ElementIDs.OutputScreenId).val(response.PageContent);
+                    $('#' + self.ElementIDs.PageNumberLabelId).text(number + 1);
+                    self.checkPagesEnabled();
+                }
+            });
+        };
+        Main.prototype.checkPagesEnabled = function () {
+            var self = this;
+            var number = Number($('#' + self.ElementIDs.PageNumberLabelId).text());
+            if (number === 1) {
+                $('#' + self.ElementIDs.PrevPageButtonId).prop("disabled", true);
+                $('#' + self.ElementIDs.FirstPageButtonId).prop("disabled", true);
+            }
+            else if (number > 1) {
+                $('#' + self.ElementIDs.PrevPageButtonId).removeProp("disabled");
+                $('#' + self.ElementIDs.FirstPageButtonId).removeProp("disabled");
+            }
+            if (number === self.pagesCount) {
+                $('#' + self.ElementIDs.NextPageButtonId).prop("disabled", true);
+                $('#' + self.ElementIDs.LastPageButtonId).prop("disabled", true);
+            }
+            else if (number < self.pagesCount) {
+                $('#' + self.ElementIDs.NextPageButtonId).removeProp("disabled");
+                $('#' + self.ElementIDs.LastPageButtonId).removeProp("disabled");
+            }
         };
         return Main;
     }());

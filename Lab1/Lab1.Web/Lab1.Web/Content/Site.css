@@ -125,3 +125,7 @@
 .display-hide {
     display: none;
 }
+
+.p-t {
+    padding-top: 10px;
+}

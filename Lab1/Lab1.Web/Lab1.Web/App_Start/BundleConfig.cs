@@ -24,6 +24,9 @@ namespace Lab1.Web
             bundles.Add(new ScriptBundle("~/bundles/main").Include(
                       "~/Scripts/Custom/main.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/waitingdialog").Include(
+                      "~/Scripts/Custom/waitingdialog.js"));
+
             // Styles
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Vendors/Bootstrap/Styles/bootstrap.css",

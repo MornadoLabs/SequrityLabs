@@ -9,7 +9,7 @@ namespace Lab1.Web.Services
 {
     public class RandomSequenceGenerator : IRandomSequenceGenerator
     {
-        private const int PartSize = 40000;
+        public const int PartSize = 40000;
 
         public RandomSequenceGenerator(long a, long c, long m, long x0)
         {

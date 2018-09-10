@@ -3,4 +3,14 @@
     min-height: 400px;
     min-width: 500px;
     word-wrap: normal;
+    color: black;
+    background-color: white;
+}
+
+#pageNumber {
+    color: black;
+}
+
+.page-btn {
+    background-color: transparent;
 }

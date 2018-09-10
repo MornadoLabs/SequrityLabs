@@ -87,13 +87,32 @@
                         <button class="col-md-offset-4 col-md-4" type="submit">OK</button>
                     </div>
                 </form>
+                <div class="row">
+                    <div class="col-md-4">@Html.Label("Period")</div>
+                    <div class="col-md-4 text-left">@Html.Label(" ", new { @id = "period" })</div>
+                </div>
             </div>
 
             <div class="col-md-6">
-                @Html.TextArea("outputScreen", new { @id = "outputScreen" })
+                <div class="row">
+                    <div class="col-md-12">
+                        @Html.TextArea("outputScreen", new { @id = "outputScreen", @disabled = true })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <button class="btn btn-lg page-btn glyphicon glyphicon glyphicon-fast-backward" id="firstPage" disabled></button>
+                        <button class="btn btn-lg page-btn glyphicon glyphicon-chevron-left" id="prevPage" disabled></button>
+                    </div>
+                    <div class="col-md-4 text-center p-t">
+                        @Html.Label(" ", new { @id = "pageNumber" })
+                    </div>
+                    <div class="col-md-4">
+                        <button class="btn btn-lg page-btn glyphicon glyphicon-chevron-right" id="nextPage" disabled></button>
+                        <button class="btn btn-lg page-btn glyphicon glyphicon-fast-forward" id="lastPage" disabled></button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
-<div data-source-url="@(Html.Action("InputData", "Home"))" id="InputDataUrl" />
