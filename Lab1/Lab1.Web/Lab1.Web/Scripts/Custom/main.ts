@@ -85,13 +85,13 @@ namespace Lab1 {
                         required: true,
                         number: true,
                         min: 0,
-                        max: $('#ManualInput_M').val()
+                        //max: $('#ManualInput_M').val()
                     },
                     "ManualInput.C": {
                         required: true,
                         number: true,
                         min: 0,
-                        max: $('#ManualInput_M').val()
+                        //max: $('#ManualInput_M').val()
                     },
                     "ManualInput.M": {
                         required: true,
@@ -102,7 +102,7 @@ namespace Lab1 {
                         required: true,
                         number: true,
                         min: 0,
-                        max: $('#ManualInput_M').val()
+                        //max: $('#ManualInput_M').val()
                     },
                     OutputSize: {
                         required: true,

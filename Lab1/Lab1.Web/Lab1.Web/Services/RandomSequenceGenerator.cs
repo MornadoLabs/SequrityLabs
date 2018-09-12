@@ -9,7 +9,7 @@ namespace Lab1.Web.Services
 {
     public class RandomSequenceGenerator : IRandomSequenceGenerator
     {
-        public const int PartSize = 40000;
+        public const int PartSize = 200000;
 
         public RandomSequenceGenerator(long a, long c, long m, long x0)
         {
@@ -18,10 +18,12 @@ namespace Lab1.Web.Services
             this.Period = 0;
             this.IsEnded = false;
             this.IsStart = true;
+            this.FirstElements = new List<long>();
         }
         
         private RandomNumberGenerator Generator { get; set; }
         private bool IsStart { get; set; }
+        private List<long> FirstElements { get; set; }
 
         public long x0 { get; protected set; }
         public long Period { get; protected set; }
@@ -33,6 +35,10 @@ namespace Lab1.Web.Services
             {
                 return null;
             }
+            if (IsStart)
+            {
+                FirstElements = new List<long> { x0 };
+            }
 
             var result = new List<long>();
 
@@ -41,7 +47,12 @@ namespace Lab1.Web.Services
                 var nextNumber = Generator.GetNextNumber();
                 result.Add(nextNumber);
 
-                if (nextNumber == x0 && (!IsStart || IsStart && result.Count > 1))
+                if (IsStart && i < 2)
+                {
+                    FirstElements.Add(nextNumber);
+                }
+
+                if (nextNumber == x0 && (!IsStart || IsStart && result.Count > 1) || FirstElements.Contains(nextNumber) && (!IsStart || IsStart && i > 1))
                 {
                     IsEnded = true;
                     Period += i;
