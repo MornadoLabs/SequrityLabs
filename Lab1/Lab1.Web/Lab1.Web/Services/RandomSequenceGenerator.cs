@@ -24,6 +24,7 @@ namespace Lab1.Web.Services
         private RandomNumberGenerator Generator { get; set; }
         private bool IsStart { get; set; }
         private List<long> FirstElements { get; set; }
+        private long prevNumb { get; set; }
 
         public long x0 { get; protected set; }
         public long Period { get; protected set; }
@@ -52,12 +53,14 @@ namespace Lab1.Web.Services
                     FirstElements.Add(nextNumber);
                 }
 
-                if (nextNumber == x0 && (!IsStart || IsStart && result.Count > 1) || FirstElements.Contains(nextNumber) && (!IsStart || IsStart && i > 1))
+                if (nextNumber == x0 && (!IsStart || IsStart && result.Count > 1) || FirstElements.Contains(nextNumber) && (!IsStart || IsStart && i > 1) || nextNumber == prevNumb)
                 {
                     IsEnded = true;
                     Period += i;
                     return result;
                 }
+
+                prevNumb = nextNumber;
             }
 
             Period += PartSize;

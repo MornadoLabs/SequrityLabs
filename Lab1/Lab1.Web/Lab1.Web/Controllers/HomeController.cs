@@ -57,6 +57,17 @@ namespace Lab1.Web.Controllers
             }
             else
             {
+                if (model.ManualInput.A >= model.ManualInput.M ||
+                    model.ManualInput.C >= model.ManualInput.M ||
+                    model.ManualInput.X0 >= model.ManualInput.M)
+                {
+                    return Json(new
+                    {
+                        Success = false,
+                        ErrorMessage = "Incorrect input data."
+                    }, JsonRequestBehavior.AllowGet);
+                }
+
                 Data = new InputModel
                 {
                     A = model.ManualInput.A,

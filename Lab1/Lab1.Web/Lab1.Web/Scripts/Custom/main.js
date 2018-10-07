@@ -118,7 +118,7 @@ var Lab1;
                 // Make sure the form is submitted to the destination defined
                 // in the "action" attribute of the form when valid
                 submitHandler: function (form) {
-                    var isVariant = $('input[name=' + self.ElementIDs.InputTypeRadioButtonId + ']:checked').val();
+                    var isVariant = $('input[name=' + self.ElementIDs.InputTypeRadioButtonId + ']:checked').val().toLowerCase() == "true";
                     var data;
                     if (isVariant) {
                         data = {
@@ -152,7 +152,11 @@ var Lab1;
                                 $('#' + self.ElementIDs.PeriodLabelId).text(response.Period);
                                 self.loadPage(0);
                             }
-                        }
+                            else {
+                                self.waitingdialog.hide();
+                                alert(response.ErrorMessage);
+                            }
+                        },
                     });
                 },
                 errorPlacement: function (error, element) {
