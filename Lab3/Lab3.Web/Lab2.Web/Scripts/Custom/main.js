@@ -1,5 +1,5 @@
-var Lab2;
-(function (Lab2) {
+var Lab3;
+(function (Lab3) {
     var Web;
     (function (Web) {
         var Main = (function () {
@@ -18,7 +18,6 @@ var Lab2;
             }
             Main.prototype.init = function () {
                 var self = this;
-                self.waitingdialog = new Web.waitingdialog();
                 $('input[name=' + self.ElementIDs.InputTypeRadioButtonId + ']').change(function () {
                     var manualRow = $('#' + self.ElementIDs.ManualInputRowId);
                     var fileRow = $('#' + self.ElementIDs.FilelInputRowId);
@@ -33,6 +32,8 @@ var Lab2;
                 });
                 $('#' + self.ElementIDs.SubmitButtonId).click(function () {
                     var isManualInput = $('input[name=' + self.ElementIDs.InputTypeRadioButtonId + ']:checked').val() === "True";
+                    //let form = $('#' + self.ElementIDs.InputFormId)[0];
+                    //let formData = new FormData(<HTMLFormElement>form);
                     var data;
                     if (isManualInput) {
                         data = {
@@ -49,7 +50,6 @@ var Lab2;
                             FileInputPath: file.name,
                         };
                     }
-                    self.waitingdialog.show("Loading...");
                     $.ajax({
                         url: "/Home/GetHash",
                         method: "post",
@@ -58,8 +58,6 @@ var Lab2;
                         success: function (response) {
                             $('#' + self.ElementIDs.OutputLabelId).text(response.Result);
                         },
-                    }).always(function () {
-                        self.waitingdialog.hide();
                     });
                 });
             };
@@ -67,6 +65,6 @@ var Lab2;
         }());
         Web.Main = Main;
         var main = new Main();
-    })(Web = Lab2.Web || (Lab2.Web = {}));
-})(Lab2 || (Lab2 = {}));
+    })(Web = Lab3.Web || (Lab3.Web = {}));
+})(Lab3 || (Lab3 = {}));
 //# sourceMappingURL=main.js.map

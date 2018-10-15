@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace Lab2.Web
+namespace Lab3.Web
 {
     public class BundleConfig
     {
@@ -22,8 +22,7 @@ namespace Lab2.Web
                       "~/Vendors/Bootstrap/Scripts/respond.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/main").Include(
-                      "~/Scripts/Custom/waitingdialog.js",
-                      "~/Scripts/Custom/main.js"));            
+                      "~/Scripts/Custom/main.js"));
 
             // Styles
             bundles.Add(new StyleBundle("~/Content/css").Include(

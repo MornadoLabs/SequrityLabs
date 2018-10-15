@@ -148,6 +148,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\RC5Helper.cs" />
     <Compile Include="Models\AppendModel.cs" />
     <Compile Include="Models\InputVewModel.cs" />
     <Compile Include="Models\RoundInputModel.cs" />
@@ -155,22 +156,12 @@
     <Compile Include="Repositories\MDBufferRepository.cs" />
     <Compile Include="Services\FileService.cs" />
     <Compile Include="Services\HashService.cs" />
+    <Compile Include="Services\RandomNumberGenerator.cs" />
+    <Compile Include="Services\RC5Service.cs" />
     <Compile Include="Services\RoundService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\custom.css" />
-    <Content Include="Scripts\Custom\main.js">
-      <DependentUpon>main.ts</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Custom\main.js.map">
-      <DependentUpon>main.ts</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Custom\waitingdialog.js">
-      <DependentUpon>waitingdialog.ts</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Custom\waitingdialog.js.map">
-      <DependentUpon>waitingdialog.ts</DependentUpon>
-    </Content>
     <Content Include="Vendors\Bootstrap\Styles\bootstrap.css" />
     <Content Include="Vendors\Bootstrap\Styles\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -225,7 +216,6 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\Custom\main.ts" />
-    <TypeScriptCompile Include="Scripts\Custom\waitingdialog.ts" />
     <TypeScriptCompile Include="Scripts\typings\JQuery\jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\JQuery\jquery.validate.d.ts" />
   </ItemGroup>

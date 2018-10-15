@@ -1,4 +1,4 @@
-﻿namespace Lab2.Web {
+﻿namespace Lab3.Web {
     export class Main {
 
         ElementIDs = {
@@ -17,15 +17,12 @@
             FilelInputRowId: "filelInputRow",
         }        
 
-        waitingdialog: waitingdialog;
-
         constructor() {
             this.init();
         }
 
         init() {
             let self = this;
-            self.waitingdialog = new waitingdialog();
 
             $('input[name=' + self.ElementIDs.InputTypeRadioButtonId + ']').change(function () {
                 let manualRow = $('#' + self.ElementIDs.ManualInputRowId);
@@ -42,6 +39,8 @@
 
             $('#' + self.ElementIDs.SubmitButtonId).click(() => {
                 let isManualInput = $('input[name=' + self.ElementIDs.InputTypeRadioButtonId + ']:checked').val() === "True";
+                //let form = $('#' + self.ElementIDs.InputFormId)[0];
+                //let formData = new FormData(<HTMLFormElement>form);
                 let data;
                 if (isManualInput) {
                     data = {
@@ -58,8 +57,6 @@
                     }
                 }
 
-                self.waitingdialog.show("Loading...");
-
                 $.ajax({
                     url: "/Home/GetHash",
                     method: "post",
@@ -67,10 +64,8 @@
                     contentType: "application/json",
                     success: function (response) {
                         $('#' + self.ElementIDs.OutputLabelId).text(response.Result);
-                    },
-                }).always(() => {
-                    self.waitingdialog.hide();
-                });
+                    },                    
+                })
             });
         }
     }

@@ -1,5 +1,5 @@
-﻿using Lab2.Web.Models;
-using Lab2.Web.Services;
+﻿using Lab3.Web.Models;
+using Lab3.Web.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Lab2.Web.Controllers
+namespace Lab3.Web.Controllers
 {
     public class HomeController : Controller
     {
@@ -57,11 +57,6 @@ namespace Lab2.Web.Controllers
             }
             
             return Json(new { Result = result }, JsonRequestBehavior.AllowGet);
-        }
-
-        public JsonResult SaveToFile()
-        {
-            return Json(new { Result = true }, JsonRequestBehavior.AllowGet);
         }
     }
 }

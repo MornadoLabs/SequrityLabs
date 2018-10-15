@@ -1,11 +1,11 @@
-﻿using Lab2.Web.Models;
-using Lab2.Web.Repositories;
+﻿using Lab3.Web.Models;
+using Lab3.Web.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Lab2.Web.Services
+namespace Lab3.Web.Services
 {
     public class HashService
     {
@@ -25,6 +25,12 @@ namespace Lab2.Web.Services
         {
             input = GetFullInput(input);
             return ProcessBlock(input, true);
+        }
+
+        public byte[] GetHashInBytes(byte[] input)
+        {
+            input = GetFullInput(input);
+            return ProcessBlockInBytes(input, true);
         }
 
         public string ProcessBlock(byte[] block, bool isFirstBlock = false)
@@ -65,6 +71,52 @@ namespace Lab2.Web.Services
             }
 
             return MDBuffer.ToString();
+        }
+
+        public byte[] ProcessBlockInBytes(byte[] block, bool isFirstBlock = false)
+        {
+            var roundModels = RoundService.GetRoundModels(block);
+
+            if (isFirstBlock)
+                MDBuffer.ResetBuffer();
+
+            foreach (var roundModel in roundModels)
+            {
+                var startupBuffer = MDBuffer.Clone();
+
+                for (int cycleNumber = 0; cycleNumber < CycleCount; cycleNumber++)
+                {
+                    for (int i = 0; i < RoundStepsCount; i++)
+                    {
+                        var a = MDBuffer[0, i % 4];
+                        var b = MDBuffer[1, i % 4];
+                        var c = MDBuffer[2, i % 4];
+                        var d = MDBuffer[3, i % 4];
+
+                        var idx = RoundService.GetRoundIdx(i, cycleNumber);
+
+                        RoundService.ApplyRoundFunction(
+                            ref a, b, c, d,
+                            roundModel[idx],
+                            (i + 1) + 16 * cycleNumber,
+                            RoundService.S[cycleNumber, i % 4],
+                            cycleNumber);
+
+                        MDBuffer[i % 4] = a;
+                    }
+                }
+
+                MDBuffer = MDBuffer + startupBuffer;
+
+            }
+
+            var result = new byte[16];
+            Array.Copy(BitConverter.GetBytes(MDBuffer.A), 0, result, 0, 4);
+            Array.Copy(BitConverter.GetBytes(MDBuffer.B), 0, result, 4, 4);
+            Array.Copy(BitConverter.GetBytes(MDBuffer.C), 0, result, 8, 4);
+            Array.Copy(BitConverter.GetBytes(MDBuffer.D), 0, result, 12, 4);
+
+            return result;
         }
 
         public AppendModel GetAppendModel(long startupSize)
