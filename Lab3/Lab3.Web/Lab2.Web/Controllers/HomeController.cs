@@ -6,57 +6,39 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using FileInfo = System.IO.FileInfo;
 
 namespace Lab3.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private HashService _hashService;
-        public HashService HashService {
-            get
-            {
-                if (_hashService == null)
-                {
-                    _hashService = new HashService();
-                }
-
-                return _hashService;
-            }
-        }
-
-        private FileService _fileService;
-        public FileService FileService
-        {
-            get
-            {
-                if (_fileService == null)
-                {
-                    _fileService = new FileService();
-                }
-
-                return _fileService;
-            }
-        }
+        public RC5Service RC5Service { get; set; } = new RC5Service();
+        public FileService FileService { get; set; } = new FileService();
 
         public ActionResult Index()
         {
-            var model = new InputVewModel { IsManualInput = true };
+            var model = new InputVewModel();
             return View(model);
         }
 
-        public JsonResult GetHash(InputVewModel input)
+        [HttpPost]
+        public JsonResult EncryptData(InputVewModel input)
         {
-            string result;
-            if (input.IsManualInput)
+            try
             {
-                result = HashService.GetHash(Encoding.ASCII.GetBytes(input.InputText ?? string.Empty));
+                var file = new FileInfo(FileService.BaseDirectory + input.FileInput);
+                var encryptingResults =
+                    RC5Service.Encrypt(
+                        FileService.LoadFile(file.FullName),
+                        Encoding.Unicode.GetBytes(input.Key), 32, 12, 16);
+                FileService.SaveEncriptingResut(encryptingResults, file);
             }
-            else
+            catch(Exception ex)
             {
-                result = FileService.GetFileHash(input.FileInputPath);
+                return Json(new { Success = false }, JsonRequestBehavior.AllowGet);
             }
-            
-            return Json(new { Result = result }, JsonRequestBehavior.AllowGet);
+
+            return Json(new { Success = true }, JsonRequestBehavior.AllowGet);
         }
     }
 }

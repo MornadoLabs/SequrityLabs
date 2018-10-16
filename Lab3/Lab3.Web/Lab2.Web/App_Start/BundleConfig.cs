@@ -21,6 +21,9 @@ namespace Lab3.Web
                       "~/Vendors/Bootstrap/Scripts/bootstrap.js",
                       "~/Vendors/Bootstrap/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/sweetalert").Include(
+                      "~/Vendors/sweetalert/Scripts/sweetalert.min.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/main").Include(
                       "~/Scripts/Custom/main.js"));
 

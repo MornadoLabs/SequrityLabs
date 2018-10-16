@@ -8,12 +8,10 @@ namespace Lab3.Web.Models
 {
     public class InputVewModel
     {
-        [Display(Name = "Input text")]
-        public string InputText { get; set; }
+        [Display(Name = "Key word")]
+        public string Key { get; set; }
 
         [Display(Name = "Choose file")]
-        public string FileInputPath { get; set; }
-
-        public bool IsManualInput { get; set; }
+        public string FileInput { get; set; }        
     }
 }

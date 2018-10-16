@@ -150,6 +150,7 @@
     </Compile>
     <Compile Include="Helpers\RC5Helper.cs" />
     <Compile Include="Models\AppendModel.cs" />
+    <Compile Include="Models\EncryptResultModel.cs" />
     <Compile Include="Models\InputVewModel.cs" />
     <Compile Include="Models\RoundInputModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -185,6 +186,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Vendors\Bootstrap\Scripts\respond.js" />
     <Content Include="Vendors\Bootstrap\Scripts\respond.min.js" />
+    <Content Include="Vendors\sweetalert\Scripts\sweetalert.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -218,6 +220,7 @@
     <TypeScriptCompile Include="Scripts\Custom\main.ts" />
     <TypeScriptCompile Include="Scripts\typings\JQuery\jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\JQuery\jquery.validate.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\sweetalert\sweetalert.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

@@ -4,63 +4,43 @@
 @model Lab3.Web.Models.InputVewModel
 
 <form id="inputForm" class="m-t-md">
+
     <div class="row">
         <div class="col-md-12">
-            @Html.Label("Input type: ")
-            <div class="radio">
-                <label>
-                    @Html.RadioButtonFor(m => m.IsManualInput, true)
-                    Manual input
-                </label>
-            </div>
-            <div class="radio">
-                <label>
-                    @Html.RadioButtonFor(m => m.IsManualInput, false)
-                    Load file
-                </label>
-            </div>
-        </div>
-    </div>
-
-    <div class="row @(Model.IsManualInput ? "" : "display-hide")" id="manualInputRow">
-        <div class="col-md-12">
             <div class="row">
                 <div class="col-md-6">
-                    @Html.LabelFor(model => model.InputText)
+                    @Html.LabelFor(model => model.FileInput)
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    @Html.TextAreaFor(model => model.InputText)
+
+            <div class="row m-t-n-md">
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.FileInput, new { @type = "file" })
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row @(Model.IsManualInput ? "display-hide" : "")" id="filelInputRow">
+    <div class="row">
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-6">
-                    @Html.LabelFor(model => model.FileInputPath)
+                    @Html.LabelFor(model => model.Key)
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    @Html.TextBoxFor(model => model.FileInputPath, new { @type = "file" })
+
+            <div class="row m-t-n-md">
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.Key)
                 </div>
             </div>
         </div>
     </div>
+
 </form>
 
 <div class="row">
     <div class="col-md-12">
-        @Html.Label(" ", new { @id = "output" })
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-12">
-        <button class="btn btn-default" id="submitButton">Get Hash</button>
+        <button class="btn btn-default" id="encryptButton">Encrypt file</button>
     </div>
 </div>

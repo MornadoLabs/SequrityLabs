@@ -118,6 +118,10 @@
     margin-bottom: 25px;
 }
 
+.m-t-n-md {
+    margin-top: -15px;
+}
+
 /* Paddings */
 .p-t {
     padding-top: 10px;

@@ -5,58 +5,35 @@ var Lab3;
         var Main = (function () {
             function Main() {
                 this.ElementIDs = {
-                    SubmitButtonId: "submitButton",
-                    InputTypeRadioButtonId: "IsManualInput",
-                    ManualInputId: "InputText",
-                    FileInputId: "FileInputPath",
+                    EncryptButtonId: "encryptButton",
+                    KeyInputId: "Key",
+                    FileInputId: "FileInput",
                     InputFormId: "inputForm",
-                    OutputLabelId: "output",
-                    ManualInputRowId: "manualInputRow",
-                    FilelInputRowId: "filelInputRow",
                 };
                 this.init();
             }
             Main.prototype.init = function () {
                 var self = this;
-                $('input[name=' + self.ElementIDs.InputTypeRadioButtonId + ']').change(function () {
-                    var manualRow = $('#' + self.ElementIDs.ManualInputRowId);
-                    var fileRow = $('#' + self.ElementIDs.FilelInputRowId);
-                    if (fileRow.hasClass("display-hide")) {
-                        fileRow.removeClass("display-hide");
-                        manualRow.addClass("display-hide");
-                    }
-                    else {
-                        fileRow.addClass("display-hide");
-                        manualRow.removeClass("display-hide");
-                    }
-                });
-                $('#' + self.ElementIDs.SubmitButtonId).click(function () {
-                    var isManualInput = $('input[name=' + self.ElementIDs.InputTypeRadioButtonId + ']:checked').val() === "True";
-                    //let form = $('#' + self.ElementIDs.InputFormId)[0];
-                    //let formData = new FormData(<HTMLFormElement>form);
-                    var data;
-                    if (isManualInput) {
-                        data = {
-                            IsManualInput: isManualInput,
-                            InputText: $('#' + self.ElementIDs.ManualInputId).val()
-                        };
-                    }
-                    else {
-                        var form = $('#' + self.ElementIDs.InputFormId)[0];
-                        var formData = new FormData(form);
-                        var file = formData.get("FileInputPath");
-                        data = {
-                            IsManualInput: isManualInput,
-                            FileInputPath: file.name,
-                        };
-                    }
+                $('#' + self.ElementIDs.EncryptButtonId).click(function () {
+                    var form = $('#' + self.ElementIDs.InputFormId)[0];
+                    var formData = new FormData(form);
+                    var file = formData.get("FileInput");
+                    var data = {
+                        Key: formData.get("Key"),
+                        FileInput: file.name,
+                    };
                     $.ajax({
-                        url: "/Home/GetHash",
+                        url: "/Home/EncryptData",
                         method: "post",
                         data: JSON.stringify(data),
                         contentType: "application/json",
                         success: function (response) {
-                            $('#' + self.ElementIDs.OutputLabelId).text(response.Result);
+                            if (response.Success) {
+                                swal("Success!", "", "success");
+                            }
+                            else {
+                                swal("Error!", "Something went wrong. Please try again.", "error");
+                            }
                         },
                     });
                 });

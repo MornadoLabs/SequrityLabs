@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Lab3.Web.Helpers;
+using Lab3.Web.Models;
 
 namespace Lab3.Web.Services
 {
@@ -12,7 +13,7 @@ namespace Lab3.Web.Services
 
         private HashService HashService { get; set; } = new HashService();
 
-        public byte[] Encrypt(byte[] input, byte[] keyInput, int w, int r, int b)
+        public EncryptingResultModel Encrypt(byte[] input, byte[] keyInput, int w, int r, int b)
         {
             var key = GetKey(keyInput, b);
             for (int i = 0; i < keyInput.Length; i++)
@@ -28,7 +29,8 @@ namespace Lab3.Web.Services
             }
 
             var IV = EncryptInitializeVector(BitConverter.GetBytes(RandomNumberGenerator.GetNextNumber()), key, w, r);
-            var result = new byte[input.Length];
+            var resultData = new byte[input.Length];
+            var result = new EncryptingResultModel { IV = IV };
             for (int i = 0; i < input.Length; i += helper.BlockSize)
             {
                 var currentBlock = new byte[helper.BlockSize];
@@ -37,8 +39,9 @@ namespace Lab3.Web.Services
                 currentBlock = XOR(IV, currentBlock);
                 IV = EncryptBlock(currentBlock, helper);
 
-                Array.Copy(IV, 0, result, i, helper.BlockSize);
+                Array.Copy(IV, 0, resultData, i, helper.BlockSize);
             }
+            result.EncryptedData = resultData;
 
             return result;
         }
