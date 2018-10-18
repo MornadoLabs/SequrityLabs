@@ -17,7 +17,16 @@ namespace Lab3.Web.Controllers
 
         public ActionResult Index()
         {
-            var model = new InputVewModel();
+            var model = new InputVewModel { W = 64, R = 16, B = 32 };
+            var ListW = new List<SelectListItem>
+            {
+                new SelectListItem { Text = "16", Value = "16" },
+                new SelectListItem { Text = "32", Value = "32" },
+                new SelectListItem { Text = "64", Value = "64" }
+            };
+
+            ViewBag.ListW = ListW;
+
             return View(model);
         }
 
@@ -26,12 +35,69 @@ namespace Lab3.Web.Controllers
         {
             try
             {
+                if (input.R < 0 || input.R > 255)
+                {
+                    return Json(new
+                    {
+                        Success = false,
+                        ErrorMessage = "R must be greater or equal 0 and less or equal than 255"
+                    }, JsonRequestBehavior.AllowGet);
+                }
+
+                if (input.B < 0 || input.B > 255)
+                {
+                    return Json(new
+                    {
+                        Success = false,
+                        ErrorMessage = "B must be greater or equal 0 and less or equal than 255"
+                    }, JsonRequestBehavior.AllowGet);
+                }
+
                 var file = new FileInfo(FileService.BaseDirectory + input.FileInput);
                 var encryptingResults =
                     RC5Service.Encrypt(
                         FileService.LoadFile(file.FullName),
-                        Encoding.Unicode.GetBytes(input.Key), 32, 12, 16);
+                        Encoding.Unicode.GetBytes(input.Key), input.W, input.R, input.B);
                 FileService.SaveEncriptingResut(encryptingResults, file);
+            }
+            catch(Exception ex)
+            {
+                return Json(new { Success = false }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { Success = true }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult DecryptData(InputVewModel input)
+        {
+            try
+            {
+                if (input.R < 0 || input.R > 255)
+                {
+                    return Json(new
+                    {
+                        Success = false,
+                        ErrorMessage = "R must be greater or equal 0 and less or equal than 255"
+                    }, JsonRequestBehavior.AllowGet);
+                }
+
+                if (input.B < 0 || input.B > 255)
+                {
+                    return Json(new
+                    {
+                        Success = false,
+                        ErrorMessage = "B must be greater or equal 0 and less or equal than 255"
+                    }, JsonRequestBehavior.AllowGet);
+                }
+
+                var file = new FileInfo(FileService.BaseDirectory + input.FileInput);
+                var decryptingResults =
+                    RC5Service.Decrypt(
+                        FileService.LoadFile(file.FullName),
+                        Encoding.Unicode.GetBytes(input.Key), input.W, input.R, input.B);
+
+                FileService.SaveDecriptingResut(decryptingResults, file);
             }
             catch(Exception ex)
             {

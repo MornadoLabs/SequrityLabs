@@ -25,5 +25,21 @@ namespace Lab3.Web.Services
             var encodedFilePath = file.FullName.Insert(file.FullName.Length - file.Extension.Length, "_encrypted");
             File.WriteAllBytes(encodedFilePath, fileData);
         }
+
+        public void SaveDecriptingResut(byte[] decryptingResult, FileInfo file)
+        {
+            var decryptedFilePath = string.Empty;
+
+            if (file.Name.Contains("_encrypted"))
+            {
+                decryptedFilePath = file.Directory + "\\" + file.Name.Replace("_encrypted", "_decrypted");
+            }
+            else
+            {
+                decryptedFilePath = file.FullName.Insert(file.FullName.Length - file.Extension.Length, "_decrypted");
+            }
+
+            File.WriteAllBytes(decryptedFilePath, decryptingResult);
+        }
     }
 }

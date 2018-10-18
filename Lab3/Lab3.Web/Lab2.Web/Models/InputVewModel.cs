@@ -12,6 +12,12 @@ namespace Lab3.Web.Models
         public string Key { get; set; }
 
         [Display(Name = "Choose file")]
-        public string FileInput { get; set; }        
+        public string FileInput { get; set; }     
+        
+        public int W { get; set; }
+
+        public int R { get; set; }
+
+        public int B { get; set; }
     }
 }

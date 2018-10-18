@@ -1,3 +1,7 @@
 ﻿#Key {
     min-width: 300px;
 }
+
+#W:disabled, #R:disabled, #B:disabled {
+    background: white;
+}

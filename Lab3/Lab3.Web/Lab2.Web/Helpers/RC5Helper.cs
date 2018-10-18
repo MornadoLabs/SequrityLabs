@@ -32,14 +32,9 @@ namespace Lab3.Web.Helpers
 
             var c = B / W;
             var L = new ulong[c];
-            for (int i = 0; i < c; i++)
+            for (int i = B - 1; i >= 0; i--)
             {
-                ulong sum = 0;
-                for (int j = 0; j < W; j++)
-                {
-                    sum += (ulong) Math.Pow(2, 8 * j) * Key[i * W + j];
-                }
-                L[i] = sum;
+                L[i / W] = RotateLeft(L[i / W], 8, W * 8) + Key[i];
             }
 
             S = new ulong[2 * r + 2];
@@ -51,7 +46,7 @@ namespace Lab3.Web.Helpers
 
             var t = 3 * Math.Max(L.Length, S.Length);
             ulong A1 = 0, B1 = 0;
-            for (int s = 1, i = 0, j = 0; s < t; s++)
+            for (int s = 0, i = 0, j = 0; s < t; s++)
             {
                 S[i] = RotateLeft((S[i] + A1 + B1), 3, W * 8);
                 A1 = S[i];

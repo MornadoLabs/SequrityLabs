@@ -1,37 +1,76 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+    var listW = (IEnumerable<SelectListItem>)ViewBag.ListW ?? new List<SelectListItem>();
 }
 @model Lab3.Web.Models.InputVewModel
 
 <form id="inputForm" class="m-t-md">
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-4">
+
             <div class="row">
-                <div class="col-md-6">
-                    @Html.LabelFor(model => model.FileInput)
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.LabelFor(model => model.FileInput)
+                        </div>
+                    </div>
+
+                    <div class="row m-t-n-md">
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.FileInput, new { @type = "file" })
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="row m-t-n-md">
-                <div class="col-md-6">
-                    @Html.TextBoxFor(model => model.FileInput, new { @type = "file" })
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.LabelFor(model => model.Key)
+                        </div>
+                    </div>
+
+                    <div class="row m-t-n-md">
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Key)
+                        </div>
+                    </div>
                 </div>
             </div>
+
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-4">
             <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.W)
+                </div>
+
                 <div class="col-md-6">
-                    @Html.LabelFor(model => model.Key)
+                    @Html.DropDownListFor(model => model.W, listW, new { @class = "full-width", @disabled = "disabled" })
                 </div>
             </div>
 
-            <div class="row m-t-n-md">
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.R)
+                </div>
+
                 <div class="col-md-6">
-                    @Html.TextBoxFor(model => model.Key)
+                    @Html.TextBoxFor(model => model.R, new { @disabled = "disabled" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.B)
+                </div>
+
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.B, new { @disabled = "disabled" })
                 </div>
             </div>
         </div>
@@ -42,5 +81,6 @@
 <div class="row">
     <div class="col-md-12">
         <button class="btn btn-default" id="encryptButton">Encrypt file</button>
+        <button class="btn btn-default" id="decryptButton">Decrypt file</button>
     </div>
 </div>

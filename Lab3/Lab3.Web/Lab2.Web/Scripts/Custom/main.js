@@ -6,8 +6,12 @@ var Lab3;
             function Main() {
                 this.ElementIDs = {
                     EncryptButtonId: "encryptButton",
+                    DecryptButtonId: "decryptButton",
                     KeyInputId: "Key",
                     FileInputId: "FileInput",
+                    WInputId: "W",
+                    RInputId: "R",
+                    BInputId: "B",
                     InputFormId: "inputForm",
                 };
                 this.init();
@@ -15,27 +19,40 @@ var Lab3;
             Main.prototype.init = function () {
                 var self = this;
                 $('#' + self.ElementIDs.EncryptButtonId).click(function () {
-                    var form = $('#' + self.ElementIDs.InputFormId)[0];
-                    var formData = new FormData(form);
-                    var file = formData.get("FileInput");
-                    var data = {
-                        Key: formData.get("Key"),
-                        FileInput: file.name,
-                    };
-                    $.ajax({
-                        url: "/Home/EncryptData",
-                        method: "post",
-                        data: JSON.stringify(data),
-                        contentType: "application/json",
-                        success: function (response) {
-                            if (response.Success) {
-                                swal("Success!", "", "success");
-                            }
-                            else {
-                                swal("Error!", "Something went wrong. Please try again.", "error");
-                            }
-                        },
-                    });
+                    self.sendData("/Home/EncryptData");
+                });
+                $('#' + self.ElementIDs.DecryptButtonId).click(function () {
+                    self.sendData("/Home/DecryptData");
+                });
+            };
+            Main.prototype.sendData = function (url) {
+                var self = this;
+                var form = $('#' + self.ElementIDs.InputFormId)[0];
+                var formData = new FormData(form);
+                var file = formData.get("FileInput");
+                var data = {
+                    Key: formData.get("Key"),
+                    FileInput: file.name,
+                    W: $('#' + self.ElementIDs.WInputId).val(),
+                    R: $('#' + self.ElementIDs.RInputId).val(),
+                    B: $('#' + self.ElementIDs.BInputId).val(),
+                };
+                $.ajax({
+                    url: url,
+                    method: "post",
+                    data: JSON.stringify(data),
+                    contentType: "application/json",
+                    success: function (response) {
+                        if (response.Success) {
+                            swal("Success!", "", "success");
+                        }
+                        else {
+                            var errorMessage = response.ErrorMessage
+                                ? response.ErrorMessage
+                                : "Something went wrong. Please try again.";
+                            swal("Error!", errorMessage, "error");
+                        }
+                    },
                 });
             };
             return Main;
