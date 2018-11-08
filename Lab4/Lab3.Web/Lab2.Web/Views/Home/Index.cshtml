@@ -1,0 +1,87 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@model Lab4.Web.Models.InputVewModel
+
+<form id="inputForm" class="m-t-md">
+
+    <div class="row">
+        <div class="col-md-8">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.LabelFor(model => model.RSAFileInput)
+                        </div>
+                    </div>
+
+                    <div class="row m-t-n-md">
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.RSAFileInput, new { @type = "file" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.LabelFor(model => model.RC5FileInput)
+                        </div>
+                    </div>
+
+                    <div class="row m-t-n-md">
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.RC5FileInput, new { @type = "file" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 col-md-offset-6">
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.LabelFor(model => model.RC5Key)
+                        </div>
+                    </div>
+
+                    <div class="row m-t-n-md">
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.RC5Key)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</form>
+
+<div class="row">
+    <div class="col-md-2">
+        <button class="btn btn-info" id="encryptButton">Encrypt file</button>
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-info" id="decryptButton">Decrypt file</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2">
+        <button class="btn btn-info" id="encryptRSAButton">Encrypt file using RSA</button>
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-info" id="decryptRSAButton">Decrypt file using RSA</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2">
+        <button class="btn btn-info" id="encryptRC5Button">Encrypt file using RC5</button>
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-info" id="decryptRC5Button">Decrypt file using RC5</button>
+    </div>
+</div>

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Lab3.Web.Helpers;
-using Lab3.Web.Models;
+using Lab4.Web.Helpers;
+using Lab4.Web.Models;
 
-namespace Lab3.Web.Services
+namespace Lab4.Web.Services
 {
     public class RC5Service
     {
