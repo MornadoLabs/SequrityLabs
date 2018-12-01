@@ -43,6 +43,8 @@
                     $('.' + self.ElementClasses.Manual).addClass('display-hide');
                     $('.' + self.ElementClasses.Nonmanual).removeClass('display-hide');
                 }
+
+                $('#' + self.ElementIDs.ResultSignatureTextBoxId).html("");
             });
             $('input[name=' + self.ElementIDs.IsManualInputRadioButtonId + ']:checked').trigger('change');
 
@@ -88,7 +90,7 @@
                             ? response.SuccessMessage
                             : "";
 
-                        $('#' + self.ElementIDs.ResultSignatureTextBoxId).val(response.Result);
+                        $('#' + self.ElementIDs.ResultSignatureTextBoxId).html(response.Result);
                         swal("Success!", successMessage, "success");
                     }
                     else {
@@ -96,6 +98,7 @@
                             ? response.ErrorMessage
                             : "Something went wrong. Please try again.";
 
+                        $('#' + self.ElementIDs.ResultSignatureTextBoxId).html("");
                         swal("Error!", errorMessage, "error");
                     }
                 },
@@ -148,6 +151,8 @@
 
                         swal("Error!", errorMessage, "error");
                     }
+
+                    $('#' + self.ElementIDs.ResultSignatureTextBoxId).html("");
                 },
             }).always(() => {
                 self.waitingdialog.hide();

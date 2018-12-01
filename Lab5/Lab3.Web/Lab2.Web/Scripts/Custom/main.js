@@ -34,6 +34,7 @@ var Lab5;
                         $('.' + self.ElementClasses.Manual).addClass('display-hide');
                         $('.' + self.ElementClasses.Nonmanual).removeClass('display-hide');
                     }
+                    $('#' + self.ElementIDs.ResultSignatureTextBoxId).html("");
                 });
                 $('input[name=' + self.ElementIDs.IsManualInputRadioButtonId + ']:checked').trigger('change');
                 $('#' + self.ElementIDs.SignButtonId).click(function () { self.createSignature(); });
@@ -59,31 +60,31 @@ var Lab5;
                         FileInput: inputFile.name,
                     };
                 }
-                //self.waitingdialog.show("Loading...");
+                self.waitingdialog.show("Loading...");
                 $.ajax({
                     url: "/Home/SignData",
                     method: "post",
                     data: JSON.stringify(data),
                     contentType: "application/json",
                     success: function (response) {
-                        /*if (response.Success) {
-                            let successMessage = response.SuccessMessage
+                        if (response.Success) {
+                            var successMessage = response.SuccessMessage
                                 ? response.SuccessMessage
-                                : "";*/
-                        $('#' + self.ElementIDs.ResultSignatureTextBoxId).val(response.Result);
-                        /*swal("Success!", successMessage, "success");
-                    }
-                    else {
-                        let errorMessage = response.ErrorMessage
-                            ? response.ErrorMessage
-                            : "Something went wrong. Please try again.";
-
-                        swal("Error!", errorMessage, "error");
-                    }*/
+                                : "";
+                            $('#' + self.ElementIDs.ResultSignatureTextBoxId).html(response.Result);
+                            swal("Success!", successMessage, "success");
+                        }
+                        else {
+                            var errorMessage = response.ErrorMessage
+                                ? response.ErrorMessage
+                                : "Something went wrong. Please try again.";
+                            $('#' + self.ElementIDs.ResultSignatureTextBoxId).html("");
+                            swal("Error!", errorMessage, "error");
+                        }
                     },
-                }) /*.always(() => {
+                }).always(function () {
                     self.waitingdialog.hide();
-                })*/;
+                });
             };
             Main.prototype.saveSignature = function () {
                 var self = this;
@@ -123,6 +124,7 @@ var Lab5;
                                 : "Something went wrong. Please try again.";
                             swal("Error!", errorMessage, "error");
                         }
+                        $('#' + self.ElementIDs.ResultSignatureTextBoxId).html("");
                     },
                 }).always(function () {
                     self.waitingdialog.hide();
